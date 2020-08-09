@@ -17,13 +17,13 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="w64-TH-IQu">
                             <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="R90-8H-Q5B" customClass="PhotoCell" customModule="NASALibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="50" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -46,6 +46,28 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CollectionViewHeader" id="KBQ-1a-7vy" customClass="SearcnCollectionView" customModule="NASALibrary" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" barStyle="black" placeholder="Search, e.g. 'Gagarin'" translatesAutoresizingMaskIntoConstraints="NO" id="1fc-oa-S3C">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="f3k-Yl-B7U" id="lyS-13-aEY"/>
+                                    </connections>
+                                </searchBar>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="1fc-oa-S3C" secondAttribute="trailing" id="6wY-yo-nKX"/>
+                                <constraint firstItem="1fc-oa-S3C" firstAttribute="top" secondItem="KBQ-1a-7vy" secondAttribute="top" id="Y9v-S4-HYs"/>
+                                <constraint firstAttribute="bottom" secondItem="1fc-oa-S3C" secondAttribute="bottom" id="gcN-7E-8c9"/>
+                                <constraint firstItem="1fc-oa-S3C" firstAttribute="leading" secondItem="KBQ-1a-7vy" secondAttribute="leading" id="vzJ-fz-vrP"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="searchBar" destination="1fc-oa-S3C" id="6dI-OR-CQu"/>
+                            </connections>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="f3k-Yl-B7U" id="dXF-4b-Qx3"/>
                             <outlet property="delegate" destination="f3k-Yl-B7U" id="87P-ZO-ksP"/>
@@ -90,13 +112,17 @@
         <!--Navigation Controller-->
         <scene sceneID="3Dn-BB-qmL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gjk-BJ-a6z" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="Gjk-BJ-a6z" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="1hi-ia-R3B">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="GmN-yJ-JeZ">
+                        <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="f3k-Yl-B7U" kind="relationship" relationship="rootViewController" id="uUk-mw-GOt"/>
                     </connections>

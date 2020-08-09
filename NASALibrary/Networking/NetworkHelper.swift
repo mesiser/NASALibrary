@@ -34,25 +34,29 @@ class NetworkHelper {
     func fetchImagesURL(at url: String, with completion: @escaping (Bool, URL?) -> ()) {
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
+            if let httpURLResponse = response as? HTTPURLResponse {
+                print("Response status code is \(httpURLResponse.statusCode)")
+            }
              guard
-                 let httpURLResponse = response as? HTTPURLResponse,
-                 httpURLResponse.statusCode == 200,
-                 let data = data, error == nil
-                 else { return }
+                let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
+                let data = data, error == nil
+             else {completion(false, nil); return }
             do {
                 let jsonResponse = try JSONSerialization.jsonObject(with: data)
                 guard
                     let dictionary = jsonResponse as? [String: Any],
                     let collection = dictionary["collection"] as? [String:Any],
-                    let items = collection["items"] as? [Any]
-                else {return}
+                    let items = collection["items"] as? [Any],
+                    items.count > 0
+                else {completion(false, nil);return}
                 for index in 0...items.count - 1 {
                     guard
                         let item = items[index] as? [String: Any],
                         let links = item["links"] as? [Any],
                         let link = links[0] as? [String: Any],
                         var imageURLString = (link["href"] as? String)
-                    else {return}
+                    else {completion(false, nil); return}
                     if imageURLString.contains(" ") {
                         imageURLString = imageURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                     }
@@ -63,7 +67,6 @@ class NetworkHelper {
 
             } catch {
                 completion(false, nil)
-                print("Error getting images' urls")
             }
         }.resume()
     }

@@ -11,6 +11,7 @@ import Foundation
 class OperationManager {
     
     private let pendingOperations = PendingOperations()
+    var operationsSuspended = false
     var downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
     
 //MARK:- Initiating downloads accoring to priority. From lowest (startBackGroundDownload) to highest (startPriorityDownload)
@@ -52,7 +53,7 @@ class OperationManager {
     func updateDownloadQueueForPriorityItems(at indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if let pendingDownload = pendingOperations.downloadsInProgress[indexPath] {
-              pendingDownload.cancel()
+                pendingDownload.cancel()
             }
             pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
         }
@@ -67,4 +68,38 @@ class OperationManager {
     func resumeBackgroundOperations() {
         pendingOperations.backgroundQueue.isSuspended = false
     }
+    
+    func suspendAllOperations() {
+        operationsSuspended = true
+        pendingOperations.backgroundQueue.isSuspended = true
+        pendingOperations.onScreenQueue.isSuspended = true
+        pendingOperations.priorityQueue.isSuspended = true
+
+    }
+    
+    func resumeAllOperations() {
+        pendingOperations.backgroundQueue.isSuspended = false
+        pendingOperations.onScreenQueue.isSuspended = false
+        pendingOperations.priorityQueue.isSuspended = false
+        operationsSuspended = false
+    }
+    
+    func reset() {
+        pendingOperations.backgroundQueue.cancelAllOperations()
+        pendingOperations.onScreenQueue.cancelAllOperations()
+        pendingOperations.priorityQueue.cancelAllOperations()
+        downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
+    }
 }
+
+/*
+ //                switch priority {
+ //                case .high:
+ //                    print("Priority download completed")
+ //                case .middle:
+ //                    print("Middle download completed")
+ //                    print(self.pendingOperations.backgroundQueue.isSuspended)
+ //                default:
+ //                    print("Background download completed")
+ //                }
+ */

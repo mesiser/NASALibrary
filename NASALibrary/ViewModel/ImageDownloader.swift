@@ -9,7 +9,7 @@
 import UIKit
 
 class ImageDownloader: Operation {
-    let imageRecord: ImageRecord
+    private let imageRecord: ImageRecord
 
     init(_ imageRecord: ImageRecord) {
         self.imageRecord = imageRecord

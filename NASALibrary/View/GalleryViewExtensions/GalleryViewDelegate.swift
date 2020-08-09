@@ -53,4 +53,14 @@ extension GalleryViewController {
         operationManager.suspendBackgroundOperations()
         downloadImagesForVisibleCells()
     }
+    
+//MARK:- Showing footer
+    
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard navigationController?.toolbar.isHidden == true else{return}
+        navigationController?.setToolbarHidden(false, animated: true)
+        if operationManager.operationsSuspended {
+            operationManager.resumeAllOperations()
+        }
+    }
 }

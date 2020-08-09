@@ -20,5 +20,14 @@ extension GalleryViewController {
         cell.imageView.image = imageRecords[indexPath.row].image
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerView: UICollectionReusableView =  collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CollectionViewHeader", for: indexPath)
+              return headerView
+        }
+          return UICollectionReusableView()
+     }
 }
 

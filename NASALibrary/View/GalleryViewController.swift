@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GalleryViewController: UICollectionViewController {
+class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
     private let networkHelper = NetworkHelper()
     private var nasaURL = "https://images-api.nasa.gov/search?q="
@@ -24,6 +24,11 @@ class GalleryViewController: UICollectionViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.topItem?.title = "NASA Photos"
         getImagesURLS()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setToolBar()
+        super.viewDidAppear(animated)
     }
     
 //MARK:- Fetching data from the server
@@ -76,10 +81,13 @@ class GalleryViewController: UICollectionViewController {
     
     func downloadImagesForVisibleCells() {
         let indexPaths = collectionView.indexPathsForVisibleItems
+        operationManager.suspendBackgroundOperations()
         operationManager.updateDownloadQueueForPriorityItems(at: indexPaths)
         for indexPath in indexPaths {
-            downloadImage(at: indexPath, with: .middle) { _ in
-                self.operationManager.resumeBackgroundOperations()
+            downloadImage(at: indexPath, with: .middle) { [weak self] _ in
+                if indexPath == indexPaths.last {
+                    self?.operationManager.resumeBackgroundOperations()
+                }
             }
         }
     }
@@ -102,6 +110,33 @@ class GalleryViewController: UICollectionViewController {
         collectionView.allowsSelection = true
         navigationController?.pushViewController(photoViewController, animated: true)
     }
+    
+//MARK:- Search
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        reloadData(with: searchBar.text ?? "")
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("Typing")
+        if operationManager.operationsSuspended == false {
+            operationManager.suspendAllOperations()
+        }
+    }
+    
+//MARK:- Обнуление 😇
+    
+    func reloadData(with query: String) {
+        guard self.query.lowercased() != query.lowercased() else{return}
+        imageRecords = [ImageRecord]()
+        collectionView.reloadData()
+        operationManager.reset()
+        pageNumber = 1
+        nasaURL = "https://images-api.nasa.gov/search?q="
+        self.query = query
+        getImagesURLS()
+        operationManager.resumeAllOperations()
+        scrollToTop()
+    }
 }
 
 //MARK:- TO DO
@@ -109,5 +144,19 @@ class GalleryViewController: UICollectionViewController {
 //1. Resize images (on a different operation queue)
 //2. Cache images
 //3. Weak self
-//4. Search window
-//5. Alerts
+//4. Tests
+
+//Возможно загрузку url нужно осуществлять на определенной operation queue
+//Перед обнулением нужно как-то проверить, что никто не пытается встать картинки в коллекцию
+//Остававливается загрузка за кулисами после 20 картинок
+//Не начинается загрузка после поиска
+
+/*
+//                for _ in 0...100 {
+//                    let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
+//                    if let index = self?.imageRecords.count {
+//                        self?.imageRecords.append(imageRecord)
+//                        completion(index)
+//                    }
+//                }
+ */

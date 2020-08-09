@@ -29,6 +29,12 @@ class GalleryViewController: UICollectionViewController {
 //MARK:- Fetching data from the server
     
     func getImagesURLS() {
+        guard networkHelper.isInternetAvailable() else {
+            DispatchQueue.main.async {
+                self.present(Alerts(reason: .noInternet).alertController!, animated: true, completion: nil)
+            }
+            return
+        }
         fetchData() { (index) in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -40,11 +46,17 @@ class GalleryViewController: UICollectionViewController {
     
     func fetchData(with completion: @escaping (Int)->()) {
         nasaURL += query + "&page=\(pageNumber)&media_type=image"
-        networkHelper.fetchImagesURL(at: nasaURL) { [weak self] (imageURL) in
-            let imageRecord = ImageRecord(url: imageURL)
-            if let index = self?.imageRecords.count {
-                self?.imageRecords.append(imageRecord)
-                completion(index)
+        networkHelper.fetchImagesURL(at: nasaURL) { [weak self] (success, imageURL) in
+            if success {
+                let imageRecord = ImageRecord(url: imageURL!)
+                if let index = self?.imageRecords.count {
+                    self?.imageRecords.append(imageRecord)
+                    completion(index)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.present(Alerts(reason: .noConnection).alertController!, animated: true, completion: nil)
+                }
             }
         }
     }

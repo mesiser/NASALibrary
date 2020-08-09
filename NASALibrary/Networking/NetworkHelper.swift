@@ -7,10 +7,31 @@
 //
 
 import UIKit
+import SystemConfiguration
 
 class NetworkHelper {
     
-    func fetchImagesURL(at url: String, with completion: @escaping (URL) -> ()) {
+    func isInternetAvailable() -> Bool {
+          var zeroAddress = sockaddr_in()
+          zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+          zeroAddress.sin_family = sa_family_t(AF_INET)
+
+          let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+              $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                  SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+              }
+          }
+
+          var flags = SCNetworkReachabilityFlags()
+          if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+              return false
+          }
+          let isReachable = flags.contains(.reachable)
+          let needsConnection = flags.contains(.connectionRequired)
+          return (isReachable && !needsConnection)
+      }
+    
+    func fetchImagesURL(at url: String, with completion: @escaping (Bool, URL?) -> ()) {
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
              guard
@@ -36,11 +57,12 @@ class NetworkHelper {
                         imageURLString = imageURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                     }
                     if let imageURL = URL(string: imageURLString) {
-                        completion(imageURL)
+                        completion(true, imageURL)
                     }
                 }
 
             } catch {
+                completion(false, nil)
                 print("Error getting images' urls")
             }
         }.resume()

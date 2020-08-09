@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD26AF2F24DFC8D000FA861C /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD26AF2E24DFC8D000FA861C /* Alerts.swift */; };
 		DD4D15EF24DF263100CE716A /* GalleryViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15EE24DF263100CE716A /* GalleryViewDataSource.swift */; };
 		DD4D15F324DF26C800CE716A /* GalleryViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15F224DF26C800CE716A /* GalleryViewLayout.swift */; };
 		DD4D15F524DF26F300CE716A /* GalleryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15F424DF26F300CE716A /* GalleryViewDelegate.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD26AF2E24DFC8D000FA861C /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DD4D15EE24DF263100CE716A /* GalleryViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewDataSource.swift; sourceTree = "<group>"; };
 		DD4D15F224DF26C800CE716A /* GalleryViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewLayout.swift; sourceTree = "<group>"; };
 		DD4D15F424DF26F300CE716A /* GalleryViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		DDECED1424DDF715009B7D51 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DD26AF2E24DFC8D000FA861C /* Alerts.swift */,
 				DDEF107E24DE5EB5006A55BF /* ImageRecord.swift */,
 				DDEF108324DE5FD8006A55BF /* PendingOperations.swift */,
 			);
@@ -221,6 +224,7 @@
 				DD80E04424DDC82200DBDE44 /* PhotoCell.swift in Sources */,
 				DD4D15F524DF26F300CE716A /* GalleryViewDelegate.swift in Sources */,
 				DDECED1124DDE4E7009B7D51 /* NetworkHelper.swift in Sources */,
+				DD26AF2F24DFC8D000FA861C /* Alerts.swift in Sources */,
 				DDEF107F24DE5EB5006A55BF /* ImageRecord.swift in Sources */,
 				DD80E03024DDC6FA00DBDE44 /* AppDelegate.swift in Sources */,
 				DDEF108624DE6BFE006A55BF /* OperationManager.swift in Sources */,

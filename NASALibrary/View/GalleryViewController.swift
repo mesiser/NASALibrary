@@ -49,10 +49,21 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
                     self?.downloadImage(at: indexPath, withPriority: .low, with: nil)
                 }
             } else {
+                self?.setUpFakeImages()
                 DispatchQueue.main.async {
                     self?.present(Alerts(reason: reason!).alertController!, animated: true, completion: nil)
                 }
             }
+        }
+    }
+    
+    func setUpFakeImages() {
+        for _ in 0...100 {
+            let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
+            imageRecords.append(imageRecord)
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+             }
         }
     }
     

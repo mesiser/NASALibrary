@@ -11,6 +11,8 @@ import SystemConfiguration
 
 class NetworkHelper {
     
+    var processedURLCount = 0
+    
     func isInternetAvailable() -> Bool {
           var zeroAddress = sockaddr_in()
           zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
@@ -42,32 +44,39 @@ class NetworkHelper {
                 httpURLResponse.statusCode == 200,
                 let data = data, error == nil
              else {completion(false, nil); return }
-            do {
-                let jsonResponse = try JSONSerialization.jsonObject(with: data)
-                guard
-                    let dictionary = jsonResponse as? [String: Any],
-                    let collection = dictionary["collection"] as? [String:Any],
-                    let items = collection["items"] as? [Any],
-                    items.count > 0
-                else {completion(false, nil);return}
-                for index in 0...items.count - 1 {
-                    guard
-                        let item = items[index] as? [String: Any],
-                        let links = item["links"] as? [Any],
-                        let link = links[0] as? [String: Any],
-                        var imageURLString = (link["href"] as? String)
-                    else {completion(false, nil); return}
-                    if imageURLString.contains(" ") {
-                        imageURLString = imageURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                    }
-                    if let imageURL = URL(string: imageURLString) {
-                        completion(true, imageURL)
-                    }
-                }
-
-            } catch {
-                completion(false, nil)
-            }
+             let processingResult = self.processSearchResults(with: data)
+             completion(processingResult.0, processingResult.1)
         }.resume()
+    }
+    
+    func processSearchResults(with data: Data) -> (Bool, URL?) {
+        do {
+            let jsonResponse = try JSONSerialization.jsonObject(with: data)
+            guard
+                let dictionary = jsonResponse as? [String: Any],
+                let collection = dictionary["collection"] as? [String:Any],
+                let items = collection["items"] as? [Any],
+                items.count > 0
+            else {return (false, nil)}
+            for index in 0...items.count - 1 {
+                guard
+                    let item = items[index] as? [String: Any],
+                    let links = item["links"] as? [Any],
+                    let link = links[0] as? [String: Any],
+                    var imageURLString = (link["href"] as? String)
+                else {return (false, nil)}
+                if imageURLString.contains(" ") {
+                    imageURLString = imageURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                }
+                if let imageURL = URL(string: imageURLString) {
+                    processedURLCount += 1
+                    return (true, imageURL)
+                }
+            }
+
+        } catch {
+            return (false, nil)
+        }
+        return (false, nil)
     }
 }

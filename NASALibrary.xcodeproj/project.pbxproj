@@ -11,6 +11,8 @@
 		DD4D15EF24DF263100CE716A /* GalleryViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15EE24DF263100CE716A /* GalleryViewDataSource.swift */; };
 		DD4D15F324DF26C800CE716A /* GalleryViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15F224DF26C800CE716A /* GalleryViewLayout.swift */; };
 		DD4D15F524DF26F300CE716A /* GalleryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D15F424DF26F300CE716A /* GalleryViewDelegate.swift */; };
+		DD80C82C24E0F3F6009358FD /* NASALibrarySlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80C82B24E0F3F6009358FD /* NASALibrarySlowTests.swift */; };
+		DD80C83A24E0F89A009358FD /* NASALibraryFakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80C83924E0F89A009358FD /* NASALibraryFakeTests.swift */; };
 		DD80E03024DDC6FA00DBDE44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80E02F24DDC6FA00DBDE44 /* AppDelegate.swift */; };
 		DD80E03724DDC6FA00DBDE44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD80E03524DDC6FA00DBDE44 /* Main.storyboard */; };
 		DD80E03924DDC6FC00DBDE44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD80E03824DDC6FC00DBDE44 /* Assets.xcassets */; };
@@ -28,11 +30,34 @@
 		DDEF108624DE6BFE006A55BF /* OperationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEF108524DE6BFE006A55BF /* OperationManager.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DD80C82E24E0F3F6009358FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD80E02424DDC6FA00DBDE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD80E02B24DDC6FA00DBDE44;
+			remoteInfo = NASALibrary;
+		};
+		DD80C83C24E0F89A009358FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD80E02424DDC6FA00DBDE44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD80E02B24DDC6FA00DBDE44;
+			remoteInfo = NASALibrary;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		DD26AF2E24DFC8D000FA861C /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		DD4D15EE24DF263100CE716A /* GalleryViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewDataSource.swift; sourceTree = "<group>"; };
 		DD4D15F224DF26C800CE716A /* GalleryViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewLayout.swift; sourceTree = "<group>"; };
 		DD4D15F424DF26F300CE716A /* GalleryViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewDelegate.swift; sourceTree = "<group>"; };
+		DD80C82924E0F3F6009358FD /* NASALibrarySlowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NASALibrarySlowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD80C82B24E0F3F6009358FD /* NASALibrarySlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASALibrarySlowTests.swift; sourceTree = "<group>"; };
+		DD80C82D24E0F3F6009358FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD80C83724E0F89A009358FD /* NASALibraryFakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NASALibraryFakeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD80C83924E0F89A009358FD /* NASALibraryFakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NASALibraryFakeTests.swift; sourceTree = "<group>"; };
+		DD80C83B24E0F89A009358FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD80E02C24DDC6FA00DBDE44 /* NASALibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NASALibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD80E02F24DDC6FA00DBDE44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD80E03624DDC6FA00DBDE44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +78,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DD80C82624E0F3F6009358FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD80C83424E0F89A009358FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DD80E02924DDC6FA00DBDE44 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -85,10 +124,30 @@
 			path = GalleryViewExtensions;
 			sourceTree = "<group>";
 		};
+		DD80C82A24E0F3F6009358FD /* NASALibrarySlowTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD80C82B24E0F3F6009358FD /* NASALibrarySlowTests.swift */,
+				DD80C82D24E0F3F6009358FD /* Info.plist */,
+			);
+			path = NASALibrarySlowTests;
+			sourceTree = "<group>";
+		};
+		DD80C83824E0F89A009358FD /* NASALibraryFakeTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD80C83924E0F89A009358FD /* NASALibraryFakeTests.swift */,
+				DD80C83B24E0F89A009358FD /* Info.plist */,
+			);
+			path = NASALibraryFakeTests;
+			sourceTree = "<group>";
+		};
 		DD80E02324DDC6FA00DBDE44 = {
 			isa = PBXGroup;
 			children = (
 				DD80E02E24DDC6FA00DBDE44 /* NASALibrary */,
+				DD80C82A24E0F3F6009358FD /* NASALibrarySlowTests */,
+				DD80C83824E0F89A009358FD /* NASALibraryFakeTests */,
 				DD80E02D24DDC6FA00DBDE44 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				DD80E02C24DDC6FA00DBDE44 /* NASALibrary.app */,
+				DD80C82924E0F3F6009358FD /* NASALibrarySlowTests.xctest */,
+				DD80C83724E0F89A009358FD /* NASALibraryFakeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +218,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DD80C82824E0F3F6009358FD /* NASALibrarySlowTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD80C83224E0F3F6009358FD /* Build configuration list for PBXNativeTarget "NASALibrarySlowTests" */;
+			buildPhases = (
+				DD80C82524E0F3F6009358FD /* Sources */,
+				DD80C82624E0F3F6009358FD /* Frameworks */,
+				DD80C82724E0F3F6009358FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD80C82F24E0F3F6009358FD /* PBXTargetDependency */,
+			);
+			name = NASALibrarySlowTests;
+			productName = NASALibrarySlowTests;
+			productReference = DD80C82924E0F3F6009358FD /* NASALibrarySlowTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DD80C83624E0F89A009358FD /* NASALibraryFakeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD80C83E24E0F89A009358FD /* Build configuration list for PBXNativeTarget "NASALibraryFakeTests" */;
+			buildPhases = (
+				DD80C83324E0F89A009358FD /* Sources */,
+				DD80C83424E0F89A009358FD /* Frameworks */,
+				DD80C83524E0F89A009358FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD80C83D24E0F89A009358FD /* PBXTargetDependency */,
+			);
+			name = NASALibraryFakeTests;
+			productName = NASALibraryFakeTests;
+			productReference = DD80C83724E0F89A009358FD /* NASALibraryFakeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DD80E02B24DDC6FA00DBDE44 /* NASALibrary */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DD80E04024DDC6FC00DBDE44 /* Build configuration list for PBXNativeTarget "NASALibrary" */;
@@ -184,6 +281,14 @@
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Vadim Shalugin";
 				TargetAttributes = {
+					DD80C82824E0F3F6009358FD = {
+						CreatedOnToolsVersion = 11.6;
+						TestTargetID = DD80E02B24DDC6FA00DBDE44;
+					};
+					DD80C83624E0F89A009358FD = {
+						CreatedOnToolsVersion = 11.6;
+						TestTargetID = DD80E02B24DDC6FA00DBDE44;
+					};
 					DD80E02B24DDC6FA00DBDE44 = {
 						CreatedOnToolsVersion = 11.6;
 					};
@@ -203,11 +308,27 @@
 			projectRoot = "";
 			targets = (
 				DD80E02B24DDC6FA00DBDE44 /* NASALibrary */,
+				DD80C82824E0F3F6009358FD /* NASALibrarySlowTests */,
+				DD80C83624E0F89A009358FD /* NASALibraryFakeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DD80C82724E0F3F6009358FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD80C83524E0F89A009358FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DD80E02A24DDC6FA00DBDE44 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,6 +342,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DD80C82524E0F3F6009358FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD80C82C24E0F3F6009358FD /* NASALibrarySlowTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD80C83324E0F89A009358FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD80C83A24E0F89A009358FD /* NASALibraryFakeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DD80E02824DDC6FA00DBDE44 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +383,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DD80C82F24E0F3F6009358FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD80E02B24DDC6FA00DBDE44 /* NASALibrary */;
+			targetProxy = DD80C82E24E0F3F6009358FD /* PBXContainerItemProxy */;
+		};
+		DD80C83D24E0F89A009358FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD80E02B24DDC6FA00DBDE44 /* NASALibrary */;
+			targetProxy = DD80C83C24E0F89A009358FD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		DD80E03524DDC6FA00DBDE44 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -266,6 +416,86 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DD80C83024E0F3F6009358FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFAHY4PT3;
+				INFOPLIST_FILE = NASALibrarySlowTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shalugin.NASALibrarySlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NASALibrary.app/NASALibrary";
+			};
+			name = Debug;
+		};
+		DD80C83124E0F3F6009358FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFAHY4PT3;
+				INFOPLIST_FILE = NASALibrarySlowTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shalugin.NASALibrarySlowTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NASALibrary.app/NASALibrary";
+			};
+			name = Release;
+		};
+		DD80C83F24E0F89A009358FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFAHY4PT3;
+				INFOPLIST_FILE = NASALibraryFakeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shalugin.NASALibraryFakeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NASALibrary.app/NASALibrary";
+			};
+			name = Debug;
+		};
+		DD80C84024E0F89A009358FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2QFAHY4PT3;
+				INFOPLIST_FILE = NASALibraryFakeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shalugin.NASALibraryFakeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NASALibrary.app/NASALibrary";
+			};
+			name = Release;
+		};
 		DD80E03E24DDC6FC00DBDE44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -419,6 +649,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DD80C83224E0F3F6009358FD /* Build configuration list for PBXNativeTarget "NASALibrarySlowTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD80C83024E0F3F6009358FD /* Debug */,
+				DD80C83124E0F3F6009358FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD80C83E24E0F89A009358FD /* Build configuration list for PBXNativeTarget "NASALibraryFakeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD80C83F24E0F89A009358FD /* Debug */,
+				DD80C84024E0F89A009358FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DD80E02724DDC6FA00DBDE44 /* Build configuration list for PBXProject "NASALibrary" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -10,7 +10,6 @@ import UIKit
 
 class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
-//    private let networkHelper = NetworkHelper()
     private let urlFetcher = URLFetcher()
     private var nasaURL = "https://images-api.nasa.gov/search?q="
     private var query = ""
@@ -143,54 +142,4 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 //MARK:- TO DO
 
 //1. Resize images (on a different operation queue)
-//2. Cache images
 //3. Weak self
-//4. Tests
-
-//Возможно загрузку url нужно осуществлять на определенной operation queue
-//Перед обнулением нужно как-то проверить, что никто не пытается встать картинки в коллекцию
-//Остававливается загрузка за кулисами после 20 картинок
-//Не начинается загрузка после поиска
-
-/*
- 
- func getImagesURLS() {
-     guard networkHelper.isInternetAvailable() else {
-         DispatchQueue.main.async {
-             self.present(Alerts(reason: .noInternet).alertController!, animated: true, completion: nil)
-         }
-         return
-     }
-     fetchData() { (index) in
-         DispatchQueue.main.async {
-             self.collectionView.reloadData()
-         }
-         let indexPath = IndexPath(row: index, section: 0)
-         self.downloadImage(at: indexPath, withPriority: .low, with: nil)
-     }
- }
- 
- func fetchData(with completion: @escaping (Int)->()) {
-     nasaURL += query + "&page=\(pageNumber)&media_type=image"
-     networkHelper.fetchImagesURL(at: nasaURL) { [weak self] (success, imageURL) in
-         if success {
-             let imageRecord = ImageRecord(url: imageURL!)
-             if let index = self?.imageRecords.count {
-                 self?.imageRecords.append(imageRecord)
-                 completion(index)
-             }
-         } else {
-             DispatchQueue.main.async {
-                 self?.present(Alerts(reason: .noConnection).alertController!, animated: true, completion: nil)
-             }
-         }
-     }
- }
-//                for _ in 0...100 {
-//                    let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
-//                    if let index = self?.imageRecords.count {
-//                        self?.imageRecords.append(imageRecord)
-//                        completion(index)
-//                    }
-//                }
- */

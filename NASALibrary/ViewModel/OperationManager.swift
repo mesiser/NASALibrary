@@ -6,33 +6,17 @@
 //  Copyright © 2020 Vadim Shalugin. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class OperationManager {
     
     private let pendingOperations = PendingOperations()
+    private let imageCache = NSCache<NSString, UIImage>()
     var operationsSuspended = false
     var downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
     
 //MARK:- Initiating downloads accoring to priority. From lowest (startBackGroundDownload) to highest (startPriorityDownload)
-    
-    
-//    func getImagesURLS(from url: String, with completion: @escaping (Bool, Reason?, URL?)->()) {
-//        guard networkHelper.isInternetAvailable() else {
-//            DispatchQueue.main.async {
-//                completion(false, .noInternet, nil)
-//            }
-//            return
-//        }
-//        networkHelper.fetchImagesURL(at: url) { (success, imageURL) in
-//            if success {
-//                completion(true, nil, imageURL)
-//            } else {
-//                completion(false, .noConnection, nil)
-//            }
-//        }
-//    }
-    
+
     
     func startDownload(of imageRecord: ImageRecord, at indexPath: IndexPath, with priority: Priority, with completion: @escaping (IndexPath)->()) {
 
@@ -40,6 +24,10 @@ class OperationManager {
             pendingOperations.downloadsInProgress[indexPath] == nil,
             imageRecord.state == .new
         else{return}
+        
+        if checkIfImageExistsInCache(for: imageRecord) {
+            completion(indexPath)
+        }
         let downloader = ImageDownloader(imageRecord)
 
         downloader.completionBlock = {
@@ -49,6 +37,7 @@ class OperationManager {
             DispatchQueue.main.async {
                 self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
                 self.downloadsToProcess.remove(indexPath)
+                self.imageCache.setObject(imageRecord.image!, forKey: imageRecord.url.absoluteString as NSString)
                 completion(indexPath)
             }
         }
@@ -62,6 +51,17 @@ class OperationManager {
             pendingOperations.onScreenQueue.addOperation(downloader)
         default:
             pendingOperations.backgroundQueue.addOperation(downloader)
+        }
+    }
+    
+    func checkIfImageExistsInCache(for imageRecord: ImageRecord) -> Bool {
+        if let cachedImage = self.imageCache.object(forKey: imageRecord.url.absoluteString as NSString) {
+            print("Image was cached before")
+            imageRecord.image = cachedImage
+            imageRecord.state = .downloaded
+            return true
+        } else {
+            return false
         }
     }
     

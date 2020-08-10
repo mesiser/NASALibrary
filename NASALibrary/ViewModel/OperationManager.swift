@@ -17,6 +17,23 @@ class OperationManager {
 //MARK:- Initiating downloads accoring to priority. From lowest (startBackGroundDownload) to highest (startPriorityDownload)
     
     
+//    func getImagesURLS(from url: String, with completion: @escaping (Bool, Reason?, URL?)->()) {
+//        guard networkHelper.isInternetAvailable() else {
+//            DispatchQueue.main.async {
+//                completion(false, .noInternet, nil)
+//            }
+//            return
+//        }
+//        networkHelper.fetchImagesURL(at: url) { (success, imageURL) in
+//            if success {
+//                completion(true, nil, imageURL)
+//            } else {
+//                completion(false, .noConnection, nil)
+//            }
+//        }
+//    }
+    
+    
     func startDownload(of imageRecord: ImageRecord, at indexPath: IndexPath, with priority: Priority, with completion: @escaping (IndexPath)->()) {
 
         guard

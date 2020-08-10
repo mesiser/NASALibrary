@@ -10,7 +10,8 @@ import UIKit
 
 class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
-    private let networkHelper = NetworkHelper()
+//    private let networkHelper = NetworkHelper()
+    private let urlFetcher = URLFetcher()
     private var nasaURL = "https://images-api.nasa.gov/search?q="
     private var query = ""
     let operationManager = OperationManager()
@@ -31,36 +32,25 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
         super.viewDidAppear(animated)
     }
     
-//MARK:- Fetching data from the server
+//MARK:- Fetching images URLs
     
     func getImagesURLS() {
-        guard networkHelper.isInternetAvailable() else {
-            DispatchQueue.main.async {
-                self.present(Alerts(reason: .noInternet).alertController!, animated: true, completion: nil)
-            }
-            return
-        }
-        fetchData() { (index) in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-            let indexPath = IndexPath(row: index, section: 0)
-            self.downloadImage(at: indexPath, with: .low, with: nil)
-        }
-    }
-    
-    func fetchData(with completion: @escaping (Int)->()) {
         nasaURL += query + "&page=\(pageNumber)&media_type=image"
-        networkHelper.fetchImagesURL(at: nasaURL) { [weak self] (success, imageURL) in
+        print(nasaURL)
+        urlFetcher.getImagesURLS(from: nasaURL) { [weak self] (success, reason, imageURL) in
             if success {
                 let imageRecord = ImageRecord(url: imageURL!)
                 if let index = self?.imageRecords.count {
                     self?.imageRecords.append(imageRecord)
-                    completion(index)
+                    DispatchQueue.main.async {
+                        self?.collectionView.reloadData()
+                    }
+                    let indexPath = IndexPath(row: index, section: 0)
+                    self?.downloadImage(at: indexPath, withPriority: .low, with: nil)
                 }
             } else {
                 DispatchQueue.main.async {
-                    self?.present(Alerts(reason: .noConnection).alertController!, animated: true, completion: nil)
+                    self?.present(Alerts(reason: reason!).alertController!, animated: true, completion: nil)
                 }
             }
         }
@@ -68,7 +58,7 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
 //MARK:- Donwloading images
     
-    func downloadImage(at indexPath: IndexPath, with priority: Priority, with completion: ((IndexPath)->())?) {
+    func downloadImage(at indexPath: IndexPath, withPriority priority: Priority, with completion: ((IndexPath)->())?) {
         if operationManager.downloadsToProcess.contains(indexPath) == false {
             operationManager.downloadsToProcess.insert(indexPath)
         }
@@ -84,7 +74,7 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
         operationManager.suspendBackgroundOperations()
         operationManager.updateDownloadQueueForPriorityItems(at: indexPaths)
         for indexPath in indexPaths {
-            downloadImage(at: indexPath, with: .middle) { [weak self] _ in
+            downloadImage(at: indexPath, withPriority: .middle) { [weak self] _ in
                 if indexPath == indexPaths.last {
                     self?.operationManager.resumeBackgroundOperations()
                 }
@@ -152,6 +142,39 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 //Не начинается загрузка после поиска
 
 /*
+ 
+ func getImagesURLS() {
+     guard networkHelper.isInternetAvailable() else {
+         DispatchQueue.main.async {
+             self.present(Alerts(reason: .noInternet).alertController!, animated: true, completion: nil)
+         }
+         return
+     }
+     fetchData() { (index) in
+         DispatchQueue.main.async {
+             self.collectionView.reloadData()
+         }
+         let indexPath = IndexPath(row: index, section: 0)
+         self.downloadImage(at: indexPath, withPriority: .low, with: nil)
+     }
+ }
+ 
+ func fetchData(with completion: @escaping (Int)->()) {
+     nasaURL += query + "&page=\(pageNumber)&media_type=image"
+     networkHelper.fetchImagesURL(at: nasaURL) { [weak self] (success, imageURL) in
+         if success {
+             let imageRecord = ImageRecord(url: imageURL!)
+             if let index = self?.imageRecords.count {
+                 self?.imageRecords.append(imageRecord)
+                 completion(index)
+             }
+         } else {
+             DispatchQueue.main.async {
+                 self?.present(Alerts(reason: .noConnection).alertController!, animated: true, completion: nil)
+             }
+         }
+     }
+ }
 //                for _ in 0...100 {
 //                    let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
 //                    if let index = self?.imageRecords.count {

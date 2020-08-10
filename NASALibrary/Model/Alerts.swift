@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum reason {
+enum Reason {
     case noConnection, noInternet
 }
 
@@ -19,7 +19,7 @@ class Alerts {
     private let noInternet = "Please check your internet connection"
     private let noConnection = "Can't reach NASA servers"
     
-    init(reason: reason) {
+    init(reason: Reason) {
         var message: String?
         switch reason {
         case .noConnection:

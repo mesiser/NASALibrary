@@ -10,7 +10,7 @@ import UIKit
 
 class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
-    private let urlFetcher = URLFetcher()
+    private let networkHelper = NetworkHelper()
     private var nasaURL = "https://images-api.nasa.gov/search?q="
     private var query = ""
     let operationManager = OperationManager()
@@ -35,34 +35,25 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
     func getImagesURLS() {
         nasaURL += query + "&page=\(pageNumber)&media_type=image"
-        print(nasaURL)
-        urlFetcher.getImagesURLS(from: nasaURL) { [weak self] (success, reason, imageURL) in
+        networkHelper.getImagesURLs(from: nasaURL) { [weak self] (success, reason, imageURL, totalURLs) in
             if success {
                 let imageRecord = ImageRecord(url: imageURL!)
-                if let index = self?.imageRecords.count {
-                    self?.imageRecords.append(imageRecord)
+                self?.imageRecords.append(imageRecord)
+                if self?.imageRecords.count == totalURLs {
+                    print("All urls downloaded successfully 🥳")
                     DispatchQueue.main.async {
                         self?.collectionView.reloadData()
                     }
-                    let indexPath = IndexPath(row: index, section: 0)
-                    self?.downloadImage(at: indexPath, withPriority: .low, with: nil)
-                }
+                        for index in 0...(self?.imageRecords.count)! - 1 {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self?.downloadImage(at: indexPath, withPriority: .low, with: nil)
+                        }
+                    }
             } else {
-                self?.setUpFakeImages()
                 DispatchQueue.main.async {
                     self?.present(Alerts(reason: reason!).alertController!, animated: true, completion: nil)
                 }
             }
-        }
-    }
-    
-    func setUpFakeImages() {
-        for _ in 0...100 {
-            let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
-            imageRecords.append(imageRecord)
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-             }
         }
     }
     
@@ -71,6 +62,9 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     func downloadImage(at indexPath: IndexPath, withPriority priority: Priority, with completion: ((IndexPath)->())?) {
         if operationManager.downloadsToProcess.contains(indexPath) == false {
             operationManager.downloadsToProcess.insert(indexPath)
+        }
+        if operationManager.operationsSuspended {
+            operationManager.resumeAllOperations()
         }
         let imageRecord = imageRecords[indexPath.row]
         operationManager.startDownload(of: imageRecord, at: indexPath, with: priority) { [weak self] (downloadedImageIndexPath) in
@@ -81,12 +75,16 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
     func downloadImagesForVisibleCells() {
         let indexPaths = collectionView.indexPathsForVisibleItems
-        operationManager.suspendBackgroundOperations()
         operationManager.updateDownloadQueueForPriorityItems(at: indexPaths)
         for indexPath in indexPaths {
-            downloadImage(at: indexPath, withPriority: .middle) { [weak self] _ in
-                if indexPath == indexPaths.last {
-                    self?.operationManager.resumeBackgroundOperations()
+            if imageRecords[indexPath.row].state == .new {
+                if operationManager.pendingOperations.backgroundQueue.isSuspended == false {
+                    operationManager.suspendBackgroundOperations()
+                }
+                downloadImage(at: indexPath, withPriority: .middle) { [weak self] _ in
+                    if indexPath == indexPaths.last {
+                        self?.operationManager.resumeBackgroundOperations()
+                    }
                 }
             }
         }
@@ -117,7 +115,6 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("Typing")
         if operationManager.operationsSuspended == false {
             operationManager.suspendAllOperations()
         }
@@ -127,15 +124,15 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
     func reloadData(with query: String) {
         guard self.query.lowercased() != query.lowercased() else{return}
-        imageRecords = [ImageRecord]()
-        collectionView.reloadData()
+        operationManager.suspendAllOperations()
         operationManager.reset()
+        imageRecords = [ImageRecord]()
+        networkHelper.totalURLs = 0
+        collectionView.reloadData()
         pageNumber = 1
         nasaURL = "https://images-api.nasa.gov/search?q="
         self.query = query
         getImagesURLS()
-        operationManager.resumeAllOperations()
-        scrollToTop()
     }
 }
 
@@ -143,3 +140,21 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 
 //1. Resize images (on a different operation queue)
 //3. Weak self
+
+//Test reload data and suspending operations
+//Remove toolbar when scrooled to top and show toolbar after coming back from the will image view
+//Stops background downloads after search - V
+//Stops background downloads after 20 more after reaching the end of collection - V
+//Doesn't download images from cache correctly (insert image in collection fails) - V
+
+/*
+ func setUpFakeImages() {
+     for _ in 0...100 {
+         let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
+         imageRecords.append(imageRecord)
+         DispatchQueue.main.async {
+             self.collectionView.reloadData()
+          }
+     }
+ }
+ */

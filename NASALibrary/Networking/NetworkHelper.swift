@@ -11,7 +11,7 @@ import SystemConfiguration
 
 class NetworkHelper {
     
-    var processedURLCount = 0
+    var totalURLs = 0
     
     func isInternetAvailable() -> Bool {
           var zeroAddress = sockaddr_in()
@@ -33,23 +33,29 @@ class NetworkHelper {
           return (isReachable && !needsConnection)
       }
     
-    func fetchImagesURL(at url: String, with completion: @escaping (Bool, URL?) -> ()) {
+    func getImagesURLs(from url: String, with completion: @escaping (Bool, Reason?, URL?, Int?) -> ()) {
+        guard isInternetAvailable() else{completion(false, .noInternet, nil, nil); return}
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let httpURLResponse = response as? HTTPURLResponse {
                 print("Response status code is \(httpURLResponse.statusCode)")
             }
-             guard
+            guard
                 let httpURLResponse = response as? HTTPURLResponse,
                 httpURLResponse.statusCode == 200,
                 let data = data, error == nil
-             else {completion(false, nil); return }
-             let processingResult = self.processSearchResults(with: data)
-             completion(processingResult.0, processingResult.1)
+            else {completion(false, .noConnection, nil, nil); return }
+            self.processSearchResults(with: data) { (success, url, totalURLs) in
+                if success {
+                    completion(true, nil, url, totalURLs)
+                } else {
+                    completion(false, .parsingFailure, nil, nil)
+                }
+             }
         }.resume()
     }
     
-    func processSearchResults(with data: Data) -> (Bool, URL?) {
+    func processSearchResults(with data: Data, with completion: @escaping (Bool, URL?, Int?) -> ()){
         do {
             let jsonResponse = try JSONSerialization.jsonObject(with: data)
             guard
@@ -57,26 +63,25 @@ class NetworkHelper {
                 let collection = dictionary["collection"] as? [String:Any],
                 let items = collection["items"] as? [Any],
                 items.count > 0
-            else {return (false, nil)}
+                else {completion(false, nil, nil); return}
+            totalURLs += items.count
             for index in 0...items.count - 1 {
                 guard
                     let item = items[index] as? [String: Any],
                     let links = item["links"] as? [Any],
                     let link = links[0] as? [String: Any],
                     var imageURLString = (link["href"] as? String)
-                else {return (false, nil)}
+                    else {completion(false, nil, nil); return}
                 if imageURLString.contains(" ") {
                     imageURLString = imageURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 }
                 if let imageURL = URL(string: imageURLString) {
-                    processedURLCount += 1
-                    return (true, imageURL)
+                    completion(true, imageURL, totalURLs)
                 }
             }
 
         } catch {
-            return (false, nil)
+            completion(false, nil, nil)
         }
-        return (false, nil)
     }
 }

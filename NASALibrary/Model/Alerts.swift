@@ -9,15 +9,16 @@
 import UIKit
 
 enum Reason {
-    case noConnection, noInternet
+    case noConnection, noInternet, parsingFailure
 }
 
 class Alerts {
     
     var alertController: UIAlertController?
     private let okAction = UIAlertAction(title: "OK", style: .default)
-    private let noInternet = "Please check your internet connection"
-    private let noConnection = "Can't reach NASA servers"
+    private let noInternet = "Please check your internet connection 🙏"
+    private let noConnection = "Can't reach NASA servers 🧑‍🚀"
+    private let failure = "Problem occured, we're on it already 🦸‍♂️"
     
     init(reason: Reason) {
         var message: String?
@@ -26,6 +27,8 @@ class Alerts {
             message = noConnection
         case .noInternet:
             message = noInternet
+        case .parsingFailure :
+            message = failure
         }
         alertController = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
         alertController?.addAction(okAction)

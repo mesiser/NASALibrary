@@ -10,7 +10,7 @@ import UIKit
 
 class OperationManager {
     
-    private let pendingOperations = PendingOperations()
+    let pendingOperations = PendingOperations()
     private let imageCache = NSCache<NSString, UIImage>()
     var operationsSuspended = false
     var downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
@@ -37,7 +37,9 @@ class OperationManager {
             DispatchQueue.main.async {
                 self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
                 self.downloadsToProcess.remove(indexPath)
-                self.imageCache.setObject(imageRecord.image!, forKey: imageRecord.url.absoluteString as NSString)
+                if imageRecord.state == .downloaded {
+                    self.imageCache.setObject(imageRecord.image!, forKey: imageRecord.url.absoluteString as NSString)
+                }
                 completion(indexPath)
             }
         }
@@ -56,7 +58,6 @@ class OperationManager {
     
     func checkIfImageExistsInCache(for imageRecord: ImageRecord) -> Bool {
         if let cachedImage = self.imageCache.object(forKey: imageRecord.url.absoluteString as NSString) {
-            print("Image was cached before")
             imageRecord.image = cachedImage
             imageRecord.state = .downloaded
             return true
@@ -91,7 +92,6 @@ class OperationManager {
         pendingOperations.backgroundQueue.isSuspended = true
         pendingOperations.onScreenQueue.isSuspended = true
         pendingOperations.priorityQueue.isSuspended = true
-
     }
     
     func resumeAllOperations() {

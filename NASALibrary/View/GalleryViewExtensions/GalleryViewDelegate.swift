@@ -15,7 +15,7 @@ extension GalleryViewController {
 //MARK:- Showing full size photo
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("Image tapped")
+        print("Image tapped 🤭")
         collectionView.allowsSelection = false
         let image = imageRecords[indexPath.row].image
         if image == UIImage(named: "NASA") {
@@ -44,13 +44,11 @@ extension GalleryViewController {
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
       if !decelerate {
-        operationManager.suspendBackgroundOperations()
         downloadImagesForVisibleCells()
       }
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        operationManager.suspendBackgroundOperations()
         downloadImagesForVisibleCells()
     }
     

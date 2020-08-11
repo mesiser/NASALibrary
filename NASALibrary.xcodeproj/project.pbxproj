@@ -22,7 +22,6 @@
 		DD80E04924DDCAEB00DBDE44 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD80E04824DDCAEB00DBDE44 /* GalleryViewController.swift */; };
 		DD87E84124E0B5AA00FCC948 /* GalleryViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87E84024E0B5AA00FCC948 /* GalleryViewFooter.swift */; };
 		DDA87EBA24DFDA5D00F46F3A /* SearcnCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA87EB924DFDA5D00F46F3A /* SearcnCollectionView.swift */; };
-		DDA87EBE24DFE62100F46F3A /* URLFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA87EBD24DFE62100F46F3A /* URLFetcher.swift */; };
 		DDECED1124DDE4E7009B7D51 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDECED1024DDE4E7009B7D51 /* NetworkHelper.swift */; };
 		DDEF107F24DE5EB5006A55BF /* ImageRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEF107E24DE5EB5006A55BF /* ImageRecord.swift */; };
 		DDEF108224DE5F96006A55BF /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDEF108124DE5F96006A55BF /* ImageDownloader.swift */; };
@@ -69,7 +68,6 @@
 		DD80E04824DDCAEB00DBDE44 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		DD87E84024E0B5AA00FCC948 /* GalleryViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewFooter.swift; sourceTree = "<group>"; };
 		DDA87EB924DFDA5D00F46F3A /* SearcnCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearcnCollectionView.swift; sourceTree = "<group>"; };
-		DDA87EBD24DFE62100F46F3A /* URLFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFetcher.swift; sourceTree = "<group>"; };
 		DDECED1024DDE4E7009B7D51 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		DDEF107E24DE5EB5006A55BF /* ImageRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRecord.swift; sourceTree = "<group>"; };
 		DDEF108124DE5F96006A55BF /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				DDEF108124DE5F96006A55BF /* ImageDownloader.swift */,
-				DDA87EBD24DFE62100F46F3A /* URLFetcher.swift */,
 				DDEF108524DE6BFE006A55BF /* OperationManager.swift */,
 			);
 			path = ViewModel;
@@ -362,7 +359,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDA87EBE24DFE62100F46F3A /* URLFetcher.swift in Sources */,
 				DD80E04724DDC9C800DBDE44 /* PhotoViewController.swift in Sources */,
 				DD80E04924DDCAEB00DBDE44 /* GalleryViewController.swift in Sources */,
 				DD4D15EF24DF263100CE716A /* GalleryViewDataSource.swift in Sources */,
@@ -617,6 +613,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2QFAHY4PT3;
 				INFOPLIST_FILE = NASALibrary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -635,6 +632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2QFAHY4PT3;
 				INFOPLIST_FILE = NASALibrary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

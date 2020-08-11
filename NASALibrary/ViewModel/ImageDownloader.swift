@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageDownloader: Operation, URLSessionDelegate {
+class ImageDownloader: Operation {
     private let imageRecord: ImageRecord
 
     init(_ imageRecord: ImageRecord) {

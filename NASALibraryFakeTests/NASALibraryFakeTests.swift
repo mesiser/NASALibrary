@@ -40,7 +40,8 @@ class NASALibraryFakeTests: XCTestCase {
                 XCTFail("Error: \(error.localizedDescription)")
             } else if let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if statusCode == 200 {
-                    let _ = self.networkHelper.processSearchResults(with: data!)
+                    self.networkHelper.processSearchResults(with: data!) { (_, _, _) in
+                    }
                 } else {
                     XCTFail("Status code: \(statusCode)")
                 }
@@ -49,7 +50,7 @@ class NASALibraryFakeTests: XCTestCase {
         }
         dataTask.resume()
         wait(for: [promise], timeout: 5)
-        XCTAssertEqual(networkHelper.processedURLCount, 100, "Didn't parse 100 items from fake response")
+        XCTAssertEqual(networkHelper.totalURLs, 100, "Didn't parse the items from fake response")
     }
     
     func testDownloadPerformance() {

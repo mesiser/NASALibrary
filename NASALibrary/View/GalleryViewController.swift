@@ -60,9 +60,6 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 //MARK:- Donwloading images
     
     func downloadImage(at indexPath: IndexPath, withPriority priority: Priority, with completion: ((IndexPath)->())?) {
-        if operationManager.downloadsToProcess.contains(indexPath) == false {
-            operationManager.downloadsToProcess.insert(indexPath)
-        }
         if operationManager.operationsSuspended {
             operationManager.resumeAllOperations()
         }

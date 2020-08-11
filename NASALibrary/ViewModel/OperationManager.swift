@@ -13,7 +13,6 @@ class OperationManager {
     let pendingOperations = PendingOperations()
     private let imageCache = NSCache<NSString, UIImage>()
     var operationsSuspended = false
-    var downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
     
 //MARK:- Initiating downloads accoring to priority. From lowest (startBackGroundDownload) to highest (startPriorityDownload)
 
@@ -27,6 +26,7 @@ class OperationManager {
         
         if checkIfImageExistsInCache(for: imageRecord) {
             completion(indexPath)
+            return
         }
         let downloader = ImageDownloader(imageRecord)
 
@@ -36,7 +36,6 @@ class OperationManager {
             }
             DispatchQueue.main.async {
                 self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
-                self.downloadsToProcess.remove(indexPath)
                 if imageRecord.state == .downloaded {
                     self.imageCache.setObject(imageRecord.image!, forKey: imageRecord.url.absoluteString as NSString)
                 }
@@ -105,7 +104,6 @@ class OperationManager {
         pendingOperations.backgroundQueue.cancelAllOperations()
         pendingOperations.onScreenQueue.cancelAllOperations()
         pendingOperations.priorityQueue.cancelAllOperations()
-        downloadsToProcess = Set<Dictionary<IndexPath, Operation>.Keys.Element>()
     }
 }
 

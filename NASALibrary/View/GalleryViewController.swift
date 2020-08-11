@@ -12,7 +12,7 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
     private let networkHelper = NetworkHelper()
     private var nasaURL = "https://images-api.nasa.gov/search?q="
-    private var query = ""
+    var query = ""
     let operationManager = OperationManager()
     var imageRecords = [ImageRecord]()
     var pageNumber = 1
@@ -111,7 +111,10 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     
 //MARK:- Search
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        reloadData(with: searchBar.text ?? "")
+        if let query = searchBar.text, self.query.lowercased() != query {
+            reloadData(with: query)
+            getImagesURLS()
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -123,16 +126,16 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 //MARK:- Обнуление 😇
     
     func reloadData(with query: String) {
-        guard self.query.lowercased() != query.lowercased() else{return}
         operationManager.suspendAllOperations()
         operationManager.reset()
         imageRecords = [ImageRecord]()
         networkHelper.totalURLs = 0
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
         pageNumber = 1
         nasaURL = "https://images-api.nasa.gov/search?q="
         self.query = query
-        getImagesURLS()
     }
 }
 
@@ -141,20 +144,5 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
 //1. Resize images (on a different operation queue)
 //3. Weak self
 
-//Test reload data and suspending operations
 //Remove toolbar when scrooled to top and show toolbar after coming back from the will image view
-//Stops background downloads after search - V
-//Stops background downloads after 20 more after reaching the end of collection - V
-//Doesn't download images from cache correctly (insert image in collection fails) - V
 
-/*
- func setUpFakeImages() {
-     for _ in 0...100 {
-         let imageRecord = ImageRecord(url: URL(string: "https://images-api.nasa.gov/search?q=")!)
-         imageRecords.append(imageRecord)
-         DispatchQueue.main.async {
-             self.collectionView.reloadData()
-          }
-     }
- }
- */

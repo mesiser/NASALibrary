@@ -43,9 +43,9 @@ extension GalleryViewController {
 //MARK:- Uploading images for visible cells
     
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-      if !decelerate {
-        downloadImagesForVisibleCells()
-      }
+        if !decelerate {
+            downloadImagesForVisibleCells()
+        }
     }
     
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

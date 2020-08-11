@@ -9,7 +9,7 @@
 import UIKit
 
 enum Reason {
-    case noConnection, noInternet, parsingFailure
+    case noConnection, noInternet, parsingFailure, noResults
 }
 
 class Alerts {
@@ -19,6 +19,7 @@ class Alerts {
     private let noInternet = "Please check your internet connection 🙏"
     private let noConnection = "Can't reach NASA servers 🧑‍🚀"
     private let failure = "Problem occured, we're on it already 🦸‍♂️"
+    private let noResults = "No results. Please try another search 🔍"
     
     init(reason: Reason) {
         var message: String?
@@ -29,6 +30,8 @@ class Alerts {
             message = noInternet
         case .parsingFailure :
             message = failure
+        case .noResults:
+            message = noResults
         }
         alertController = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
         alertController?.addAction(okAction)

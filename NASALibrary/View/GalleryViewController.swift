@@ -136,10 +136,3 @@ class GalleryViewController: UICollectionViewController, UISearchBarDelegate {
     }
 }
 
-//MARK:- TO DO
-
-//1. Resize images (on a different operation queue)
-//3. Weak self
-
-//Remove toolbar when scrooled to top and show toolbar after coming back from the will image view
-

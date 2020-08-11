@@ -106,15 +106,3 @@ class OperationManager {
         pendingOperations.priorityQueue.cancelAllOperations()
     }
 }
-
-/*
-    switch priority {
-    case .high:
-        print("Priority download completed for indexPath \(indexPath.row)")
-    case .middle:
-        print("Middle download completed for indexPath \(indexPath.row)")
-        print(self.pendingOperations.backgroundQueue.isSuspended)
-    default:
-        print("Background download completed for indexPath \(indexPath.row)")
-    }
- */

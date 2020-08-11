@@ -21,9 +21,9 @@ extension GalleryViewController {
         if image == UIImage(named: "NASA") {
             operationManager.suspendBackgroundOperations()
             operationManager.updateDownloadQueueForPriorityItems(at: [indexPath])
-            downloadImage(at: indexPath, withPriority: .high) { (indexPath) in
-                self.showFullSizePhoto(for: self.imageRecords[indexPath.row].image!)
-                self.operationManager.resumeBackgroundOperations()
+            downloadImage(at: indexPath, withPriority: .high) { [weak self] (indexPath) in
+                self?.showFullSizePhoto(for: (self?.imageRecords[indexPath.row].image!)!)
+                self?.operationManager.resumeBackgroundOperations()
             }
         } else {
             showFullSizePhoto(for: image!)
